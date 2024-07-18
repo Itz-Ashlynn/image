@@ -137,13 +137,13 @@
 </head>
 <body>
     <div id="banner">
-        <h1>Gemini AI WEB</h1>
+        <h1>MK AI WEB</h1>
     </div>
     <div id="chat-container">
         <div id="chatbox"></div>
         <div id="inputContainer">
             <img id="userLogo" src="http://telegra.ph/file/be3864b1ac58b1231b6d2.jpg" alt="User Logo">
-            <input type="text" id="questionTypeBox" placeholder="Type your question...">
+            <input type="text" id="questionTypeBox" placeholder="Type your question to Ask...">
             <button id="sendButton">Send</button>
         </div>
     </div>
@@ -177,10 +177,10 @@
  //Made By @Itz_Ashlynn
         async function fetchAnswerFromAPI(question) {
             try {
-                const apiUrl = `https://gemini.hazex.workers.dev/?ques=${encodeURIComponent(question)}`;
+                const apiUrl = `https://mkllm.hideme.eu.org/?ask=${encodeURIComponent(question)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                const answer = data.text;
+                const answer = data.response;
 
  //Made By @Itz_Ashlynn
                 const loadingMessage = chatbox.querySelector('.bot-message.message:last-child');
