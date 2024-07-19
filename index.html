@@ -137,7 +137,7 @@
 </head>
 <body>
     <div id="banner">
-        <h1>MK AI WEB</h1>
+        <h1>ChatGPT WEB</h1>
     </div>
     <div id="chat-container">
         <div id="chatbox"></div>
@@ -177,7 +177,7 @@
  //Made By @Itz_Ashlynn
         async function fetchAnswerFromAPI(question) {
             try {
-                const apiUrl = `https://mkllm.hideme.eu.org/?ask=${encodeURIComponent(question)}`;
+                const apiUrl = `https://all-api-phi.vercel.app/?question=${encodeURIComponent(question)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 const answer = data.response;
