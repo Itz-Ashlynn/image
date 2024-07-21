@@ -180,7 +180,7 @@
                 const apiUrl = `https://all-api-phi.vercel.app/?question=${encodeURIComponent(question)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                const answer = data.response;
+                const answer = data.answer;
 
  //Made By @Itz_Ashlynn
                 const loadingMessage = chatbox.querySelector('.bot-message.message:last-child');
