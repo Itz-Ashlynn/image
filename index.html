@@ -177,10 +177,10 @@
  //Made By @Itz_Ashlynn
         async function fetchAnswerFromAPI(question) {
             try {
-                const apiUrl = `https://all-api-phi.vercel.app/?question=${encodeURIComponent(question)}`;
+                const apiUrl = `https://alexapi.69dev.id/v1/gpt4o.php?text=${encodeURIComponent(question)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                const answer = data.answer;
+                const answer = data.response;
 
  //Made By @Itz_Ashlynn
                 const loadingMessage = chatbox.querySelector('.bot-message.message:last-child');
