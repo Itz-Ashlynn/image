@@ -46,7 +46,7 @@
             width: 100%;
             padding: 20px;
             padding-top: 90px; /* Space for the banner */
-            padding-bottom: 80px; /* Space for input box */
+            padding-bottom: 120px; /* Space for input box */
             overflow-y: auto;
             flex-grow: 1;
             scroll-behavior: smooth;
@@ -127,6 +127,18 @@
             box-shadow: 0 0 25px rgba(255, 0, 200, 0.7);
         }
 
+        #modelSelector {
+            margin-left: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background: #0e0e0e;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+            cursor: pointer;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -155,6 +167,10 @@
                 padding: 10px;
                 font-size: 16px;
             }
+
+            #modelSelector {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -167,12 +183,20 @@
     </div>
     <div id="inputContainer">
         <input type="text" id="questionTypeBox" placeholder="Ask your question..." autocomplete="off">
+        <select id="modelSelector">
+            <option value="dark">Dark GPT</option>
+            <option value="gf">Girlfriend Model</option>
+            <option value="girlfriend">Girlfriend Model 2</option>
+            <option value="buddha">Buddha Model</option>
+            <option value="horny">Horny Model</option>
+        </select>
         <button id="sendButton">Send</button>
     </div>
 
     <script>
         const chatContainer = document.getElementById('chat-container');
         const questionTypeBox = document.getElementById('questionTypeBox');
+        const modelSelector = document.getElementById('modelSelector');
         const sendButton = document.getElementById('sendButton');
 
         const userId = Math.floor(Math.random() * 1000000);
@@ -193,9 +217,9 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        async function fetchAnswerFromAPI(question) {
+        async function fetchAnswerFromAPI(question, model) {
             try {
-                const apiUrl = `https://api.guruapi.tech/ai/gpt4?username=${userId}&query=${encodeURIComponent(question)}`;
+                const apiUrl = `https://evil.darkhacker7301.workers.dev/?question=${encodeURIComponent(question)}&model=${model}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 const answer = data.msg;
@@ -217,6 +241,8 @@
 
         async function sendMessage() {
             const userMessage = questionTypeBox.value.trim();
+            const selectedModel = modelSelector.value;
+
             if (userMessage !== '') {
                 addMessage(`You: ${userMessage}`, true);
 
@@ -225,11 +251,10 @@
                 loadingMessage.textContent = "Bot: Answer is loading...";
                 chatContainer.appendChild(loadingMessage);
 
-                await fetchAnswerFromAPI(userMessage);
+                await fetchAnswerFromAPI(userMessage, selectedModel);
                 questionTypeBox.value = '';
             }
         }
     </script>
 </body>
 </html>
-
