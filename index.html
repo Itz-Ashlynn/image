@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ChatGPT 4 AI</title>
+    <title>ChatGPT Professional</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style>
         /* General Reset */
@@ -13,8 +13,8 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: radial-gradient(circle at 50% 50%, #0d0d0d, #010101);
-            color: white;
+            background: linear-gradient(135deg, #e0f7fa, #b3e5fc);
+            color: #004d40;
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -26,7 +26,7 @@
             top: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(45deg, #00f0ff, #ff00c8);
+            background: linear-gradient(135deg, #00bcd4, #039be5);
             color: white;
             padding: 15px;
             text-align: center;
@@ -34,7 +34,7 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             z-index: 10;
         }
 
@@ -50,29 +50,29 @@
             overflow-y: auto;
             flex-grow: 1;
             scroll-behavior: smooth;
+            background-color: #e0f7fa;
         }
 
         .message {
             max-width: 80%;
             margin: 10px;
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 10px;
             animation: fadeIn 0.5s ease-in-out;
             word-wrap: break-word;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .user-message {
             align-self: flex-end;
-            background: linear-gradient(45deg, #007bff, #00f0ff);
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+            background: #29b6f6;
             color: white;
         }
 
         .bot-message {
             align-self: flex-start;
-            background: linear-gradient(45deg, #292929, #1a1a1a);
-            box-shadow: 0 0 15px rgba(255, 0, 200, 0.5);
-            color: white;
+            background: #81d4fa;
+            color: #004d40;
         }
 
         #inputContainer {
@@ -86,7 +86,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #1a1a1a;
+            background-color: #ffffff;
             border-radius: 30px;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
             z-index: 10;
@@ -99,18 +99,17 @@
             border: none;
             outline: none;
             font-size: 16px;
-            background: #0e0e0e;
-            color: white;
-            box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+            background: #e3f2fd;
+            color: #004d40;
             transition: box-shadow 0.3s ease;
         }
 
         #questionTypeBox:focus {
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
         }
 
         #sendButton {
-            background: linear-gradient(45deg, #ff00c8, #00f0ff);
+            background: linear-gradient(135deg, #00bcd4, #039be5);
             color: white;
             border: none;
             padding: 15px;
@@ -118,25 +117,29 @@
             border-radius: 30px;
             cursor: pointer;
             margin-left: 10px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         #sendButton:hover {
-            background: linear-gradient(45deg, #00f0ff, #ff00c8);
-            box-shadow: 0 0 25px rgba(255, 0, 200, 0.7);
+            background: linear-gradient(135deg, #039be5, #00bcd4);
+            box-shadow: 0 0 25px rgba(0, 188, 212, 0.5);
         }
 
         #modelSelector {
             margin-left: 10px;
             padding: 10px;
             font-size: 16px;
-            background: #0e0e0e;
-            color: white;
+            background: #e3f2fd;
+            color: #004d40;
             border: none;
             border-radius: 30px;
-            box-shadow: 0 0 15px rgba(255, 0, 200, 0.3);
+            box-shadow: 0 0 15px rgba(0, 188, 212, 0.3);
             cursor: pointer;
+        }
+
+        #modelSelector:hover {
+            background: #b3e5fc;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
         }
 
         @keyframes fadeIn {
@@ -176,7 +179,7 @@
 </head>
 <body>
     <div id="banner">
-        ChatGPT Futuristic
+        ChatGPT Professional
     </div>
     <div id="chat-container">
         <!-- Messages will be dynamically appended here -->
@@ -222,7 +225,8 @@
                 const apiUrl = `https://evil.darkhacker7301.workers.dev/?question=${encodeURIComponent(question)}&model=${model}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                const answer = data.msg;
+
+                const answer = data.gpt; // Get the 'gpt' parameter from the API response
 
                 const loadingMessage = chatContainer.querySelector('.bot-message.message:last-child');
                 if (loadingMessage) {
