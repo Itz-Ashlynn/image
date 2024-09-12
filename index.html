@@ -187,6 +187,7 @@
     <div id="inputContainer">
         <input type="text" id="questionTypeBox" placeholder="Ask your question..." autocomplete="off">
         <select id="modelSelector">
+            <option value="">Default (No Model)</option>
             <option value="dark">Dark GPT</option>
             <option value="gf">Girlfriend Model</option>
             <option value="girlfriend">Girlfriend Model 2</option>
@@ -202,16 +203,7 @@
         const modelSelector = document.getElementById('modelSelector');
         const sendButton = document.getElementById('sendButton');
 
-        const userId = Math.floor(Math.random() * 1000000);
-
-        sendButton.addEventListener('click', sendMessage);
-        questionTypeBox.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                sendMessage();
-            }
-        });
-
+        // Function to add messages to the chat container
         function addMessage(message, isUser = false) {
             const messageElement = document.createElement('div');
             messageElement.className = isUser ? 'user-message message' : 'bot-message message';
@@ -220,14 +212,22 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
+        // Function to fetch response from the API
         async function fetchAnswerFromAPI(question, model) {
             try {
-                const apiUrl = `https://evil.darkhacker7301.workers.dev/?question=${encodeURIComponent(question)}&model=${model}`;
+                // Build the API URL with or without the model parameter
+                let apiUrl = `https://evil.darkhacker7301.workers.dev/?question=${encodeURIComponent(question)}`;
+                if (model) {
+                    apiUrl += `&model=${model}`;
+                }
+
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
-                const answer = data.gpt; // Get the 'gpt' parameter from the API response
+                // Get the 'gpt' parameter from the API response
+                const answer = data.gpt;
 
+                // Update the last bot message with the actual response
                 const loadingMessage = chatContainer.querySelector('.bot-message.message:last-child');
                 if (loadingMessage) {
                     loadingMessage.textContent = `Bot: ${answer}`;
@@ -243,6 +243,7 @@
             }
         }
 
+        // Function to handle sending a message
         async function sendMessage() {
             const userMessage = questionTypeBox.value.trim();
             const selectedModel = modelSelector.value;
@@ -250,15 +251,26 @@
             if (userMessage !== '') {
                 addMessage(`You: ${userMessage}`, true);
 
+                // Show loading message
                 const loadingMessage = document.createElement('div');
                 loadingMessage.className = 'bot-message message';
                 loadingMessage.textContent = "Bot: Answer is loading...";
                 chatContainer.appendChild(loadingMessage);
 
+                // Fetch answer from the API
                 await fetchAnswerFromAPI(userMessage, selectedModel);
                 questionTypeBox.value = '';
             }
         }
+
+        // Add event listeners
+        sendButton.addEventListener('click', sendMessage);
+        questionTypeBox.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
     </script>
 </body>
 </html>
